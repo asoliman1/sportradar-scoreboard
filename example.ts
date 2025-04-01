@@ -1,5 +1,5 @@
-import {ScoreBoard} from './score_board.ts';
-import {MatchTeamType} from '../models/common.ts';
+import {ScoreBoard} from './src/score_board.ts';
+import {MatchTeamType} from './src/common.ts';
 
 const EGYPT_POLAND_MATCH = {
     [MatchTeamType.Home] : {team: {id: Date.now(), name:'Egypt'}},

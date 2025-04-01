@@ -1,5 +1,5 @@
-import { ITeam, ITeamScore, MatchTeams } from "../models/common.ts";
-import { Match } from "../models/match.ts";
+import { ITeam, ITeamScore, MatchTeams } from "./common.ts";
+import { Match } from "./match.ts";
 
 /**
  * Represents a scoreboard that manages multiple matches.
