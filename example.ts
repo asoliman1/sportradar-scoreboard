@@ -11,8 +11,6 @@ const BRAZIL_COLOMBIA_MATCH = {
     [MatchTeamType.Away] : {team: {id: Date.now(), name: 'Colombia'}}
 }
 
-const 
-
 class Example{
 
     constructor(){

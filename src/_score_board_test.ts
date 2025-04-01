@@ -32,6 +32,15 @@ describe("ScoreBoard", () => {
     });
   });
 
+  describe("removeMatch", () => {
+    it("should create a new match and add it to the matches array", () => {
+      const match = scoreBoard.addMatch(MATCH_2_TEAMS);
+      scoreBoard.removeMatch(match.id);
+
+      expect(scoreBoard.matches).not.toContain(match);
+    });
+  });
+
   describe("findMatch", () => {
     it("should return a match if found", () => {
       const match = new Match(MATCH_2_TEAMS);

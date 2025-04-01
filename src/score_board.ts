@@ -25,6 +25,15 @@ export class ScoreBoard {
   }
 
   /**
+   * Removes match with given id number from list.
+   *
+   * @param id match id.
+   */
+  removeMatch(id: number){
+    this.matches = this.matches.filter((match)=> match.id === id);
+  }
+
+  /**
    * Finds a match by its ID.
    *
    * @param id The ID of the match to find.
