@@ -8,13 +8,13 @@ export class ScoreBoard {
   private matches: Match[] = [];
 
   /**
-   * Creates a new match with the given teams.
+   * Creates a new match with the given teams and add to match list.
    *
    * @param teams The teams participating in the match.
    * @returns The newly created match.
    * @throws Error if any of the teams are already playing in another match.
    */
-  createMatch(teams: MatchTeams): Match {
+  addMatch(teams: MatchTeams): Match {
     if (this.validateTeamsIfExist(Object.values(teams))) {
       throw new Error("One or more teams are already playing in another match");
     }
@@ -39,12 +39,12 @@ export class ScoreBoard {
   /**
    * Checks if any of the given teams are already playing in another match.
    *
-   * @param scores The teams to check.
+   * @param teams The teams to check.
    * @returns True if any of the teams are already playing, false otherwise.
    */
-  private validateTeamsIfExist(scores: ITeam[]): Boolean {
+  private validateTeamsIfExist(teams: ITeam[]): Boolean {
     return this.matches.some((match: Match) =>
-      scores.some((team: ITeam) => {
+      teams.some((team: ITeam) => {
         if (match.isTeamExist(team.id))
           throw new Error(`${team.name} team already playing in another match`);
         return false;
@@ -75,8 +75,8 @@ export class ScoreBoard {
    *
    * @param data The data for the goal, including the match ID, team, and player.
    */
-  scoreGoal(data: { matchId: number; team: Team; player?: string }) {
-    this.findMatch(data.matchId)?.scoreGoal(data.team, data.player);
+  scoreGoal(data: { matchId: number; teamType: MatchTeamType; player?: string }) {
+    this.findMatch(data.matchId)?.scoreGoal(data.teamType, data.player);
   }
 
   /**
@@ -106,7 +106,7 @@ export class ScoreBoard {
    */
   get summary(): string[] {
     return this.sortedMatches.map(
-      (match, index) => `${index}. ${match.result}`
+      (match, index) => `${index + 1}. ${match.result}`
     );
   }
 }

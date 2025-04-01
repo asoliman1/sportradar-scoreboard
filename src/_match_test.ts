@@ -6,19 +6,14 @@ import {
   MatchTeamType,
   MatchScores,
 } from "./common.ts";
-
-const TEAM_1 = { id: 1, name: "Home Team" };
-const TEAM_2 = { id: 2, name: "Away Team" };
+import {TEAM_1, TEAM_2, MATCH_2_TEAMS} from './_mocks.ts';
 
 describe("Match class", () => {
   let match: Match;
   let scores: MatchTeams;
 
   beforeEach(() => {
-    scores = {
-      [MatchTeamType.Home]: { team: TEAM_1 },
-      [MatchTeamType.Away]: { team: TEAM_2 },
-    };
+    scores = MATCH_2_TEAMS;
     match = new Match(scores);
   });
 

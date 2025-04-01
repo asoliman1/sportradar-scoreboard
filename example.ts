@@ -22,11 +22,11 @@ class Example{
     init(){
         const scoreBoard = new ScoreBoard();
 
-        const egyptPolandMatch = scoreBoard.createMatch(EGYPT_POLAND_MATCH);
+        const egyptPolandMatch = scoreBoard.addMatch(EGYPT_POLAND_MATCH);
         egyptPolandMatch.scoreGoal(MatchTeamType.Home);
         egyptPolandMatch.scoreGoal(MatchTeamType.Away);
 
-        const brazilColombiaMatch = scoreBoard.createMatch(BRAZIL_COLOMBIA_MATCH);
+        const brazilColombiaMatch = scoreBoard.addMatch(BRAZIL_COLOMBIA_MATCH);
         brazilColombiaMatch.scoreGoal(MatchTeamType.Home);
 
         console.log(scoreBoard.summary);
