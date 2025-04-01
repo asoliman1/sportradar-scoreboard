@@ -1,26 +1,30 @@
-import { ITeam } from "../models/common.ts";
+import { ITeam, ITeamScore, MatchTeams } from "../models/common.ts";
 import { Match } from "../models/match.ts";
 
 export class ScoreBoard {
   private matches: Match[] = [];
 
-  createMatch(team1: ITeam, team2: ITeam) {
-    const match = new Match(team1, team2);
-    if (this.isDuplicate(team1, team2))
-      throw new Error("This match already exists");
+  createMatch(teams: MatchTeams): Match {
+    if (this.validateTeamsIfExist(Object.values(teams))) return;
+
+    const match = new Match(teams);
     this.matches.push(match);
     return match;
   }
 
-  private findMatch(id: number): Match | never {
+  private findMatch(id: number): Match {
     const currMatch = this.matches.find((match) => match.id === id);
     if (!currMatch) throw new Error("No match found");
     return currMatch;
   }
 
-  private isDuplicate(team1: ITeam, team2: ITeam) {
-    return !!this.matches.find(
-      (val) => val.isTeamExist(team1) && val.isTeamExist(team2)
+  private validateTeamsIfExist(scores: ITeam[]): Boolean {
+    return this.matches.some((match: Match) =>
+      scores.some((team: ITeam) => {
+        if (match.isTeamExist(team.id))
+          throw new Error(`${team.name} team already playing in another match`);
+        return false;
+      })
     );
   }
 
@@ -32,15 +36,25 @@ export class ScoreBoard {
     this.findMatch(id)?.end();
   }
 
-  private sortByHighestScore(a: Match, b: Match) {
-    return b.accumulatedScore - a.accumulatedScore;
+  scoreGoal(data: { matchId: number; team: Team; player?: string }) {
+    this.findMatch(data.matchId)?.scoreGoal(data.team, data.player);
   }
 
-  private get sortedMatches() {
+  private sortByHighestScore(a: Match, b: Match) {
+    const scoreDiff = b.accumulatedScore - a.accumulatedScore;
+    if (scoreDiff === 0) {
+      return b.startedAt.getTime() - a.startedAt.getTime();
+    }
+    return scoreDiff;
+  }
+
+  private get sortedMatches(): Match[] {
     return this.matches.sort(this.sortByHighestScores.bind(this));
   }
 
-  showResults() {
-    return this.sortedMatches.map((match: Match) => match.results);
+  get summary(): string[] {
+    return this.sortedMatches.map(
+      (match, index) => `${index}. ${match.result}`
+    );
   }
 }
