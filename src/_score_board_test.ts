@@ -123,6 +123,10 @@ describe("ScoreBoard", () => {
   });
 
   describe("summary", () => {
+    it("should return no matches at the moment if no matches added", () => {
+      expect(scoreBoard.summary).toEqual(["No matches at the moment, please add some matches"]);
+    });
+
     it("should return a sorted summary of match results", () => {
       const match1 = new Match(MATCH_2_TEAMS);
       const match2 = new Match({

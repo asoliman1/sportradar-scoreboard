@@ -114,8 +114,10 @@ export class ScoreBoard {
    * Gets a list of indexed match results.
    */
   get summary(): string[] {
-    return this.sortedMatches.map(
+    const summaryArr = this.sortedMatches.map(
       (match, index) => `${index + 1}. ${match.result}`
     );
+
+    return summaryArr.length ? summaryArr : ['No matches at the moment, please add some matches'];
   }
 }
