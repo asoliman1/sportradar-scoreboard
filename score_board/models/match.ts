@@ -1,4 +1,4 @@
-import { ITeamScore, ITeam, Team, MatchScores } from "./common.ts";
+import { ITeamScore, ITeam, MatchTeamType, MatchScores } from "./common.ts";
 
 /**
  * Gets a summary of the matches, including their results and rankings.
@@ -13,7 +13,7 @@ export class Match {
    * Scores of the match for all teams.
    */
   readonly scores: MatchTeams;
-  
+
   /**
    * Date when the match started.
    */
@@ -48,10 +48,10 @@ export class Match {
   /**
    * Checks if a team with the given ID exists in the match.
    * @param teamId ID of the team to check.
-   * @param type Type of the team (home or away).
+   * @param type Type of the team (home or away) {@link MatchTeamType}.
    * @returns True if the team exists, false otherwise.
    */
-  isTeamExist(teamId: number, type: Team): Boolean {
+  isTeamExist(teamId: number, type: MatchTeamType): Boolean {
     return this.scores[type].team.id === teamId;
   }
 
@@ -79,11 +79,11 @@ export class Match {
   /**
    * Adds a goal to the specified team's score.
    *
-   * @param team The team to add the goal to.
+   * @param team The type of the team {@link MatchTeamType}.
    * @param player The player who scored the goal (optional).
    */
-  scoreGoal(team: Team, player?: string) {
-    const team = this.scores[team];
+  scoreGoal(teamType: MatchTeamType, player?: string) {
+    const team = this.scores[teamType];
     team.goals ??= [];
     team.goals.push({ at: new Date(), id: Date.now(), player });
   }
@@ -91,11 +91,11 @@ export class Match {
   /**
    * Removes a goal from the specified team's score.
    *
-   * @param team The team to remove the goal from.
+   * @param team The type of the team {@link MatchTeamType}.
    * @param goalId The ID of the goal to remove.
    */
-  removeGoal(team: Team, goalId: number) {
-    const team = this.scores[team];
+  removeGoal(teamType: MatchTeamType, goalId: number) {
+    const team = this.scores[teamType];
     team.goals = team.goals?.filter((goal) => goal.id !== goalId);
   }
 }

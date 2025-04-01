@@ -102,7 +102,7 @@ export class ScoreBoard {
   }
 
   /**
-   * Gets a summary of the matches, including their results and rankings.
+   * Gets a list of indexed match results.
    */
   get summary(): string[] {
     return this.sortedMatches.map(
