@@ -32,7 +32,7 @@ export class ScoreBoard {
    */
   private findMatch(id: number): Match {
     const currMatch = this.matches.find((match) => match.id === id);
-    if (!currMatch) throw new Error("No match found");
+    if (!currMatch) throw new Error(`No match found with id ${id}`);
     return currMatch;
   }
 
